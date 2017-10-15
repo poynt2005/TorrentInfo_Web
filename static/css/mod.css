@@ -1,0 +1,93 @@
+
+.title_name h1{
+	text-align : center;
+	color : #8000ff;
+	font-size : 100px;
+	font-family : "Brush Script MT";
+	font-style : italic;
+	text-decoration:underline;
+}
+button{
+	background-color : #4747d1;
+	color : white;
+	padding: 15px 32px;
+	font-size : 15px;
+	font-family : fantasy;
+	
+	border-radius : 30px;
+	border: none;
+	box-shadow: 0px 8px 5px #888888;
+	
+	cursor : pointer;
+}
+button:hover{
+	background-color : white;
+	color : black;
+	cursor : pointer;
+}
+button:active{
+	background-color : #cc5200;
+	color : white;
+	transform: translateY(4px);
+	box-shadow: 0px 8px 5px;
+}
+.input_div{
+	text-align : center;
+	position: relative;
+	overflow:hidden;
+	margin : 60px 5px 60px 5px;
+}
+.input_div form{
+	text-align : center;
+	
+}
+.input_div .post_file{
+	display : none;
+	cursor : pointer;
+	background-color : blue;
+}
+
+.input_div .btn{
+	text-align : center;
+	background-color : 	#00ffff;
+	border-radius : 20px;
+	font-size : 60px;
+	font-family : fantasy;
+	color : white;
+	width : 800px;
+	height : 70px;
+	cursor : pointer;
+	display : inline-block;
+}
+.input_div .btn:hover {
+	background-color:#ffff00;
+	color : black;
+}
+
+.input_div .btn:active {
+	background-color:#00ffff;
+	color : white;
+}
+#magnet_form{
+	display : none;
+}
+
+#magnet_text{
+	text-align : center;
+	color : #333399;
+	border-radius : 20px;
+	font-size : 60px;
+	font-family : fantasy;
+	width : 750px;
+	height : 70px;
+	cursor : pointer;
+}
+
+.check_button{
+	text-align : center;
+	border-style:solid;
+	border-color : white;	
+}
+.torrent_info{
+	text-align : center;	
+}
