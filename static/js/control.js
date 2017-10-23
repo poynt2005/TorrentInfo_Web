@@ -1,3 +1,13 @@
+String.prototype.format = function(){
+	let s = this;
+	let i = arguments.length;
+	while(i--){
+		let re = new RegExp("\\{" + i + "\\}" , "gm");
+		s = s.replace(re , arguments[i]);
+	}
+	return s;
+};
+
 $(document).ready(function(){
 	
 	//spinner 
@@ -78,11 +88,17 @@ $(document).ready(function(){
 					},
 					
 					success: function(data){
-						let file = new Blob([data] , {type : "application/octet-stream"});
-						downloadURL = window.URL.createObjectURL(file);
-						html_element = "<a href ='" + downloadURL + "' download = 'YourTorrent.torrent'>Your File is Ready</a>";
-						spinner.spin();
-						$("#torrent_result").html(html_element);
+						if(data == "0"){
+							spinner.spin();
+							$("#torrent_result").html("No file found");
+						}
+						else{
+							let file = new Blob([data] , {type : "application/octet-stream"});
+							downloadURL = window.URL.createObjectURL(file);
+							html_element = "<a href ='{0}' download = 'YourTorrent.torrent'>Your File is Ready</a>".format(downloadURL);
+							spinner.spin();
+							$("#torrent_result").html(html_element);
+						}
 					},
 			
 				});

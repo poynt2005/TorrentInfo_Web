@@ -47,8 +47,9 @@ class Torrent2Magnet(object):
             time.sleep(2)
 
             #if getting torrent longer than 60 secs. Stop to find the torrent
-            if not (time.time() - start_time) <= 60:
+            if not (time.time() - start_time) <= 120:
                 found = False
+                break
             print 'Each 2 sec.  Download Speed is : %f' % (libtorrent.peer_info().down_speed)
             continue
 
@@ -71,18 +72,9 @@ class Torrent2Magnet(object):
             #get torrent name
             torrent_name = torrent_info.name()
             self.fileName = torrent_name
-            self.openFile(torrent_binary , torrent_name)
+            return torrent_binary
         else:
-            print 'Time Out'
-
-    @staticmethod
-    def openFile(binary_data , torrent_name):
-        
-        ParentPath = os.path.realpath(os.pardir).replace('\\' , '/') + '/project/src/'
-    
-        with open(ParentPath + torrent_name + '.torrent', 'wb') as f:
-            f.write(binary_data)
-        print 'Torrent File Saved'
+            return None
 
     def getFileName(self):
         if self.fileName:
