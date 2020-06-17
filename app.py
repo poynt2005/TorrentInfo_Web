@@ -1,9 +1,9 @@
 #coding = utf-8
-from flask import Flask,render_template,request,url_for,jsonify
+from flask import Flask,request,jsonify,redirect
 from TorrentInfo.getFile import Torrent2Magnet
 from TorrentInfo.GetTorrentInfo import GetTorrentInfo as GTI
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
  
 @app.route('/')
 def index():
@@ -37,3 +37,4 @@ def file_process():
 if __name__ == "__main__":
     app.debug = True
     app.run()
+

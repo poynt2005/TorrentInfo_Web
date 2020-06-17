@@ -8,12 +8,12 @@ root                    contain "app.py"
   |---> TorrentInfo     contain my module file
   |---> Upload          contain nothing = =
 ```
-### __*(Require Python 2.7 with flask lib)*__ 
+### __*(Require Docker)*__ 
 ## Usage:
 ```
 git clone "https://github.com/poynt2005/TorrentInfo_Web.git"
-python TorrentInfo_Web/app.py
-go to "127.0.0.1:5000"
+docker build -t <name> .
+docker run -p 8080:8080 -p 6881:6881 -d <name>
 ```
 ## *home.html*
 #### 1. "Upload Torrent" : Upload torrent and convert to magnet link below 

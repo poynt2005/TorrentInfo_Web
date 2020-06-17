@@ -67,9 +67,6 @@ button:active{
 	background-color:#00ffff;
 	color : white;
 }
-#magnet_form{
-	display : none;
-}
 
 #magnet_text{
 	text-align : center;
@@ -82,11 +79,51 @@ button:active{
 	cursor : pointer;
 }
 
+
+.hidden {
+	display: none;
+}
+
+.visable {
+	display: block;
+}
+
 .check_button{
 	text-align : center;
 	border-style:solid;
 	border-color : white;	
 }
 .torrent_info{
-	text-align : center;	
+	text-align : center;
+	overflow-wrap: break-word;
+}
+
+.fadeInAni {
+	animation: fadeIn 1.5s
+}
+
+.fadeOutAni {
+	animation: fadeOut 1.5s
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateX(-1000px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(1000px);
+	}
 }
