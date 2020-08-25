@@ -1,40 +1,74 @@
 #coding = utf-8
-from flask import Flask,request,jsonify,redirect
-from TorrentInfo.getFile import Torrent2Magnet
-from TorrentInfo.GetTorrentInfo import GetTorrentInfo as GTI
+from flask import Flask,request,jsonify,redirect,send_file
+from io import open
+import os, time, readJson, torrentinfo
 
-app = Flask(__name__, static_url_path='')
- 
-@app.route('/')
+app = Flask(__name__, 
+            static_url_path='',
+            static_folder='dist'
+)
+
+@app.route('/', methods=['GET'])
 def index():
-    return render_template('home.html')
-	
-@app.route('/magnet_process' , methods = ['POST'])
-def magnet_process():
+    return redirect('/index.html')
 
-        if request.method == 'POST':
-            link = request.form['magnet_link']
-            print link
-           
-            a = Torrent2Magnet(link)
-            binary = a.getTorrent()
-            if binary:
-                return binary
-            else:
-                return '0'
+@app.route('/torrent', methods=['POST'])
+def turnToMagnet():
+    files = request.files['file'].read()
 
-@app.route('/file_process' , methods = ['POST'])
-def file_process():
+    torrent = torrentinfo.torrentInfo('torrent')
 
-    if request.method == 'POST':
-        fs = request.files['file']
-        
-        a = GTI(fs.read())
-        print(a.get_magnet())
-        
-        return jsonify({"link":a.get_magnet()})
+    magnetLink = torrent.getMagnet(files)
+
+    if not magnetLink:
+        magnetLink = 'Error'
+
+    return jsonify({
+        'filetype': 'torrent',
+        'magnet': magnetLink
+    })
+
+@app.route('/magnet', methods=['POST'])
+def turnToTorrent():
+    link = request.json['link']
+    torrentRst = None
+
+    jfile = readJson.readJson(magnet=link, type='get')
+    if not jfile:
+        downloadtime = time.time()
+
+        torrent = torrentinfo.torrentInfo('magnet')
+        torrentRst = torrent.getTorrent(link, os.path.join(os.getcwd(), 'torrentfiles'))
+
+        if not torrentRst:
+            return jsonify({
+                'filetype': 'magnet', 
+                'filename': 'Error', 
+                'downloadLink': 'Error',
+                'isExists': False
+            })
+
+        fname = '%s.torrent' % int(downloadtime * 1000000)
+
+        with open(os.path.join(os.getcwd(), 'torrentfiles', fname), 'wb') as f:
+            f.write(torrentRst['torrent_binary'])
+
+        jfile = readJson.readJson(downloadtime=downloadtime, type='store', magnet=link)
+    
+    readJson.clearData()
+    
+    return jsonify({
+        'filetype': 'magnet', 
+        'filename': torrentRst['torrent_name'] + '.torrent', 
+        'downloadLink': jfile,
+        'isExists': True
+    })
+
+@app.route('/file/<torrentFile>', methods=['GET'])
+def sendTorrent(torrentFile):
+    return send_file(os.path.join(os.getcwd(), 'torrentfiles', torrentFile))
  
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0',port=8080)
 
