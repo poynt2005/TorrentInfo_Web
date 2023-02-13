@@ -3,7 +3,7 @@ from io import open
 import os, json, time, shutil
 
 
-def readJson(downloadtime = None, magnet = None, type = None):
+def readJson(downloadtime = None, magnet = None, type = None, torrent_file_name = None):
     jsonFile = None
 
     with open(os.path.join(os.getcwd(), 'torrentfiles', 'history.json'), 'r', encoding='utf8') as f:
@@ -19,14 +19,21 @@ def readJson(downloadtime = None, magnet = None, type = None):
         jsonFile.append({
             'fname': fname,
             'expire': expire,
-            'magnet': magnet
+            'magnet': magnet,
+            'torrent_file_name': torrent_file_name
         })
 
-        rst = '/file/%s' % fname
+        rst = {
+            'fname': '/file/%s' % fname,
+            'torrent_file_name': torrent_file_name
+        }
     elif type== 'get':
         for item in jsonFile:
             if item['magnet'] == magnet:
-                rst =  'file/%s' % item['fname']
+                rst = {
+                    'fname': 'file/%s' % item['fname'],
+                    'torrent_file_name': item['torrent_file_name']
+                }
                 break
 
     toRemove = []

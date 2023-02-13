@@ -53,14 +53,14 @@ def turnToTorrent():
         with open(os.path.join(os.getcwd(), 'torrentfiles', fname), 'wb') as f:
             f.write(torrentRst['torrent_binary'])
 
-        jfile = readJson.readJson(downloadtime=downloadtime, type='store', magnet=link)
-    
+        jfile = readJson.readJson(downloadtime=downloadtime, type='store', magnet=link, torrent_file_name=torrentRst['torrent_name'] + '.torrent')
+
     readJson.clearData()
     
     return jsonify({
         'filetype': 'magnet', 
-        'filename': torrentRst['torrent_name'] + '.torrent', 
-        'downloadLink': jfile,
+        'filename': jfile['torrent_file_name'], 
+        'downloadLink': jfile['fname'],
         'isExists': True
     })
 
