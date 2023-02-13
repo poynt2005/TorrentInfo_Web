@@ -31,7 +31,7 @@ def readJson(downloadtime = None, magnet = None, type = None, torrent_file_name 
         for item in jsonFile:
             if item['magnet'] == magnet:
                 rst = {
-                    'fname': 'file/%s' % item['fname'],
+                    'fname': '/file/%s' % item['fname'],
                     'torrent_file_name': item['torrent_file_name']
                 }
                 break
