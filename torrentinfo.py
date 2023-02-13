@@ -36,7 +36,7 @@ class torrentInfo(object):
             return False
         param = {
             'save_path': store_path,
-            'duplicate_is_error': True,
+            'duplicate_is_error': False,
             'storage_mode': lt.storage_mode_t.storage_mode_allocate,
         }
 
