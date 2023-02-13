@@ -3,6 +3,10 @@ from flask import Flask,request,jsonify,redirect,send_file
 from io import open
 import os, time, readJson, torrentinfo
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 app = Flask(__name__, 
             static_url_path='',
             static_folder='dist'

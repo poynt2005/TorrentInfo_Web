@@ -48,7 +48,7 @@ def readJson(downloadtime = None, magnet = None, type = None, torrent_file_name 
         jsonFile.remove(i)
     
     with open(os.path.join(os.getcwd(), 'torrentfiles', 'history.json'), 'w', encoding='utf8') as f:
-        f.write(json.dumps(jsonFile, ensure_ascii=False))
+        f.write(unicode(json.dumps(jsonFile, ensure_ascii=False)))
 
     return rst
     
