@@ -41,7 +41,8 @@ def readJson(downloadtime = None, magnet = None, type = None, torrent_file_name 
 
     for idx in range(len(jsonFile)):
         if nowtime > jsonFile[idx]['expire']:
-            os.remove(os.path.join(os.getcwd(), 'torrentfiles', jsonFile[idx]['fname']))
+            if os.path.exists(os.path.join(os.getcwd(), 'torrentfiles', jsonFile[idx]['fname'])):
+                os.remove(os.path.join(os.getcwd(), 'torrentfiles', jsonFile[idx]['fname']))
             toRemove.append(idx)
 
     for i in toRemove:
